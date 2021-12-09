@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qyn.project.dao.RelationMapper">
+
+    <!---->
+    <select id="selectRelationsByType" resultType="relation">
+        select code, name, type from relation where type = #{type} limit #{startIndex}, #{pagesize}
+    </select>
+
+    <!-- 添加映射关系 -->
+    <insert id="addRelation" parameterType="relation" >
+        insert into relation(
+                             code,
+                             name,
+                             type
+        ) values(#{code}, #{name}, #{type})
+    </insert>
+
+    <!--通过code查询-->
+    <select id="selectRelationByCode" parameterType="String" resultType="relation">
+        select code, name, type from relation where code = #{code}
+    </select>
+
+    <!--通过code查询-->
+    <select id="selectRelationByName" parameterType="String" resultType="relation">
+        select code, name, type from relation where name = #{name}
+    </select>
+
+    <!-- 是否存在name -->
+    <select id="checkByName" parameterType="String" resultType="Integer">
+        select count(name) from relation where name = #{name}
+    </select>
+
+    <!-- 是否存在code -->
+    <select id="checkByCode" parameterType="String" resultType="Integer">
+        select count(code) from relation where code = #{code}
+    </select>
+
+    <!--    查询映射数量-->
+    <select id="queryCount" resultType="Integer">
+        select count(type) from relation where type = #{type}
+    </select>
+</mapper>
